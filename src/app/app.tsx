@@ -5,17 +5,22 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Offer from '../pages/offer/offer';
 import NotFound from '../pages/not-found/not-found';
 import PrivateRoute from '../components/private-route/privateRoute';
-
+import { TOffers } from '../types/offers';
 
 type AppProps = {
   offersCount: number;
+  offersData: TOffers;
 }
 
-function App({ offersCount }: AppProps) {
+function App({ offersCount, offersData }: AppProps) {
+
+  // eslint-disable-next-line no-console
+  console.log(offersData);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<MainPage offersCount={offersCount} />} />
+        <Route path='/' element={<MainPage offersCount={offersCount} offersData={offersData} />} />
         <Route path='login' element={<Login />} />
         <Route path='favorites' element={
           <PrivateRoute>
