@@ -24,7 +24,7 @@ function App({ offersCount, offersData }: AppProps) {
         <Route path='login' element={<Login />} />
         <Route path='favorites' element={
           <PrivateRoute>
-            <Favorites />
+            <Favorites offersData={offersData} />
           </PrivateRoute>
         }
         />

@@ -66,7 +66,7 @@ const mockoffers: TOffers = [
       longitude: 2.335499,
       zoom: 16
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
     rating: 3.8
   },
@@ -77,7 +77,7 @@ const mockoffers: TOffers = [
     price: 104,
     previewImage: 'https://14.design.htmlacademy.pro/static/hotel/19.jpg',
     city: {
-      name: 'Paris',
+      name: 'Amsterdam',
       location: {
         latitude: 48.85661,
         longitude: 2.351499,
@@ -89,7 +89,7 @@ const mockoffers: TOffers = [
       longitude: 2.358499,
       zoom: 16
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 4.7
   }

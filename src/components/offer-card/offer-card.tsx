@@ -2,14 +2,13 @@ import { TOffer } from '../../types/offers';
 
 type OfferDataProps = {
   offerData: TOffer;
+  onHover?: (id: string) => void;
 }
 
 
-function OfferCard({ offerData }: OfferDataProps) {
-  // eslint-disable-next-line no-console
-  console.log(offerData);
+function OfferCard({ offerData, onHover }: OfferDataProps) {
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseEnter={() => onHover?.(offerData.id)}>
       {offerData.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
