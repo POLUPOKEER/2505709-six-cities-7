@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { TOffer } from '../../types/offers';
 
 type OfferDataProps = {
@@ -7,6 +8,8 @@ type OfferDataProps = {
 
 
 function OfferCard({ offerData, onHover }: OfferDataProps) {
+
+
   return (
     <article className="cities__card place-card" onMouseEnter={() => onHover?.(offerData.id)}>
       {offerData.isPremium && (
@@ -14,9 +17,9 @@ function OfferCard({ offerData, onHover }: OfferDataProps) {
           <span>Premium</span>
         </div>)}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`/offer/${offerData.id}`}>
           <img className="place-card__image" src={offerData.previewImage} width="260" height="200" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -38,7 +41,7 @@ function OfferCard({ offerData, onHover }: OfferDataProps) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offerData.title}</a>
+          <Link to={`/offer/${offerData.id}`}>{offerData.title}</Link>
         </h2>
         <p className="place-card__type">{offerData.type}</p>
       </div>

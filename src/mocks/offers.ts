@@ -2,11 +2,11 @@ import { TOffers } from '../types/offers';
 
 const mockoffers: TOffers = [
   {
-    id: 'fa76b5fe-2690-49ff-a0f0-ff45a39e29e9',
+    id: '3a3cce2c-c9c7-46fd-a9d6-c524a4c29c19',
     title: 'Penthouse, 4-5 rooms + 5 balconies',
     type: 'hotel',
-    price: 359,
-    previewImage: 'https://14.design.htmlacademy.pro/static/hotel/7.jpg',
+    price: 128,
+    previewImage: 'https://14.design.htmlacademy.pro/static/hotel/19.jpg',
     city: {
       name: 'Paris',
       location: {
@@ -20,16 +20,16 @@ const mockoffers: TOffers = [
       longitude: 2.342499,
       zoom: 16
     },
-    isFavorite: false,
-    isPremium: false,
-    rating: 1.6
+    isFavorite: true,
+    isPremium: true,
+    rating: 1.2
   },
   {
-    id: '26c85a7f-513f-44ad-b402-13c387b09e87',
-    title: 'The house among olive ',
-    type: 'hotel',
-    price: 487,
-    previewImage: 'https://14.design.htmlacademy.pro/static/hotel/20.jpg',
+    id: '67f0d359-fd1e-4580-a816-3ceebf442d57',
+    title: 'The Joshua Tree House',
+    type: 'apartment',
+    price: 301,
+    previewImage: 'https://14.design.htmlacademy.pro/static/hotel/9.jpg',
     city: {
       name: 'Paris',
       location: {
@@ -44,54 +44,100 @@ const mockoffers: TOffers = [
       zoom: 16
     },
     isFavorite: false,
-    isPremium: false,
-    rating: 2.6
+    isPremium: true,
+    rating: 2.4
   },
   {
-    id: 'dac2c573-fe38-4cb5-a010-6e5195d47516',
-    title: 'Penthouse, 4-5 rooms + 5 balconies',
-    type: 'room',
-    price: 110,
-    previewImage: 'https://14.design.htmlacademy.pro/static/hotel/12.jpg',
+    id: 'ba98da6c-6aab-4140-8654-46a865a705c4',
+    title: 'Loft Studio in the Central Area',
+    type: 'house',
+    price: 327,
+    previewImage: 'https://14.design.htmlacademy.pro/static/hotel/11.jpg',
     city: {
-      name: 'Paris',
+      name: 'Cologne',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 50.938361,
+        longitude: 6.959974,
         zoom: 13
       }
     },
     location: {
-      latitude: 48.834610000000005,
-      longitude: 2.335499,
+      latitude: 50.916361,
+      longitude: 6.944974,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: false,
+    rating: 4.6
+  },
+  {
+    id: '23549b01-858a-4528-925f-da3d0748a2ad',
+    title: 'The Pondhouse - A Magical Place',
+    type: 'apartment',
+    price: 451,
+    previewImage: 'https://14.design.htmlacademy.pro/static/hotel/6.jpg',
+    city: {
+      name: 'Cologne',
+      location: {
+        latitude: 50.938361,
+        longitude: 6.959974,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 50.949361,
+      longitude: 6.976974,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 2.5
+  },
+  {
+    id: '0e1b0a85-9a12-41f5-9317-80b00e3e0b9f',
+    title: 'Beautiful & luxurious apartment at great location',
+    type: 'house',
+    price: 277,
+    previewImage: 'https://14.design.htmlacademy.pro/static/hotel/10.jpg',
+    city: {
+      name: 'Brussels',
+      location: {
+        latitude: 50.846557,
+        longitude: 4.351697,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 50.862556999999995,
+      longitude: 4.375697,
       zoom: 16
     },
     isFavorite: true,
     isPremium: true,
-    rating: 3.8
+    rating: 2.9
   },
   {
-    id: '24dd781d-d83c-48be-a40b-4fd526583400',
-    title: 'The Joshua Tree House',
+    id: '7310e6f4-9072-4778-bf99-f39c08c7d9d1',
+    title: 'Penthouse, 4-5 rooms + 5 balconies',
     type: 'apartment',
-    price: 104,
-    previewImage: 'https://14.design.htmlacademy.pro/static/hotel/19.jpg',
+    price: 220,
+    previewImage: 'https://14.design.htmlacademy.pro/static/hotel/6.jpg',
     city: {
-      name: 'Amsterdam',
+      name: 'Brussels',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 50.846557,
+        longitude: 4.351697,
         zoom: 13
       }
     },
     location: {
-      latitude: 48.85761,
-      longitude: 2.358499,
+      latitude: 50.842557,
+      longitude: 4.3536969999999995,
       zoom: 16
     },
     isFavorite: true,
-    isPremium: false,
-    rating: 4.7
+    isPremium: true,
+    rating: 1.9
   }
 ];
 

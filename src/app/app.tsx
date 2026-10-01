@@ -28,7 +28,7 @@ function App({ offersCount, offersData }: AppProps) {
           </PrivateRoute>
         }
         />
-        <Route path='Offer/:id' element={<Offer />} />
+        <Route path='offer/:id' element={<Offer />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
