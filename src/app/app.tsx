@@ -4,7 +4,7 @@ import MainPage from '../pages/main-page/main-page';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Offer from '../pages/offer/offer';
 import NotFound from '../pages/not-found/not-found';
-import PrivateRoute from '../components/private-route/privateRoute';
+import PrivateRoute from '../components/privateRoute';
 import { TOffers } from '../types/offers';
 
 type AppProps = {

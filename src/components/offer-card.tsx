@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { TOffer } from '../../types/offers';
+import { TOffer } from '../types/offers';
 
 type OfferDataProps = {
   offerData: TOffer;

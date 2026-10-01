@@ -1,5 +1,5 @@
 import { TOffers } from '../../types/offers';
-import OfferCard from '../../components/offer-card/offer-card';
+import OfferCard from '../../components/offer-card';
 
 type favoritesProps = {
   offersData: TOffers;
