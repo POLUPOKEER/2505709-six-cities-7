@@ -20,7 +20,7 @@ const mockoffers: TOffers = [
       longitude: 2.342499,
       zoom: 16
     },
-    isFavorite: true,
+    isFavorite: false,
     isPremium: true,
     rating: 1.2
   },
@@ -112,7 +112,7 @@ const mockoffers: TOffers = [
       longitude: 4.375697,
       zoom: 16
     },
-    isFavorite: true,
+    isFavorite: false,
     isPremium: true,
     rating: 2.9
   },
@@ -135,7 +135,7 @@ const mockoffers: TOffers = [
       longitude: 4.3536969999999995,
       zoom: 16
     },
-    isFavorite: true,
+    isFavorite: false,
     isPremium: true,
     rating: 1.9
   }

@@ -4,32 +4,30 @@ import MainPage from '../pages/main-page/main-page';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Offer from '../pages/offer/offer';
 import NotFound from '../pages/not-found/not-found';
-import PrivateRoute from '../components/privateRoute';
 import { TOffers } from '../types/offers';
+import PrivateRoute from '../components/privateRoute';
+import { ROUTES } from '../routes';
 
 type AppProps = {
-  offersCount: number;
   offersData: TOffers;
+  isAuth: boolean;
+  offersFavoritesData: TOffers;
 }
 
-function App({ offersCount, offersData }: AppProps) {
-
-  // eslint-disable-next-line no-console
-  console.log(offersData);
-
+function App({ offersData, isAuth, offersFavoritesData }: AppProps) {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<MainPage offersCount={offersCount} offersData={offersData} />} />
-        <Route path='login' element={<Login />} />
-        <Route path='favorites' element={
-          <PrivateRoute>
-            <Favorites offersData={offersData} />
+        <Route path={ROUTES.mainPage} element={<MainPage offersData={offersData} />} />
+        <Route path={ROUTES.login} element={<Login />} />
+        <Route path={ROUTES.favorites} element={
+          <PrivateRoute isAuth={isAuth}>
+            <Favorites offersData={offersFavoritesData} />
           </PrivateRoute>
         }
         />
-        <Route path='offer/:id' element={<Offer />} />
-        <Route path='*' element={<NotFound />} />
+        <Route path={ROUTES.offer} element={<Offer />} />
+        <Route path={ROUTES.notFound} element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
