@@ -1,7 +1,7 @@
 export const ROUTES = {
   mainPage: '/',
-  login: 'login',
-  favorites: 'favorites',
-  offer: 'Offer/:id',
+  login: '/login',
+  favorites: '/favorites',
+  offer: '/Offer/:id',
   notFound: '*'
 };

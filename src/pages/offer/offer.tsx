@@ -29,7 +29,7 @@ function Offer() {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={`/${ROUTES.favorites}`}>
+                  <Link className="header__nav-link header__nav-link--profile" to={ROUTES.favorites}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
@@ -37,7 +37,7 @@ function Offer() {
                   </Link>
                 </li>
                 <li className="header__nav-item">
-                  <Link className="header__nav-link" to={`/${ROUTES.login}`}>
+                  <Link className="header__nav-link" to={ROUTES.login}>
                     <span className="header__signout">Sign out</span>
                   </Link>
                 </li>

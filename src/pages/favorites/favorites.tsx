@@ -34,7 +34,7 @@ function Favorites({ offersData }: favoritesProps) {
                   </Link>
                 </li>
                 <li className="header__nav-item">
-                  <Link className="header__nav-link" to={`/${ROUTES.login}`}>
+                  <Link className="header__nav-link" to={ROUTES.login}>
                     <span className="header__signout">Sign out</span>
                   </Link>
                 </li>
@@ -63,7 +63,7 @@ function Favorites({ offersData }: favoritesProps) {
                     {offersData
                       .filter((offer) => offer.city.name === city)
                       .map((offer) => (
-                        <OfferCard key={offer.id} offerData={offer} />
+                        <OfferCard key={offer.id} offerData={offer} variant='favorites' />
                       ))}
                   </div>
                 </li>
