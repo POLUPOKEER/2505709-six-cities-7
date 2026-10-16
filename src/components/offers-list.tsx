@@ -1,26 +1,17 @@
-import { useState } from 'react';
 import { TOffers, TOffer } from '../types/offers';
 import OfferCard from './offer-card';
 
 type OffersListProps = {
   offersData: TOffers;
+  onCardHover: (id: string) => void;
+  onCardLeave: () => void;
 }
 
-export default function OffersList({ offersData }: OffersListProps) {
-
-  const [activeCard, setActiveCard] = useState('');
-  // eslint-disable-next-line no-console, no-alert
-  // console.log(activeCard);
-
-  const handleCardHover = (id: string) => {
-    if (id !== activeCard) {
-      setActiveCard(id);
-    }
-  };
+export default function OffersList({ offersData, onCardHover, onCardLeave }: OffersListProps) {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offersData.map((offerData: TOffer) => (
-        <OfferCard key={offerData.id} offerData={offerData} onHover={handleCardHover} />
+        <OfferCard key={offerData.id} offerData={offerData} onHover={onCardHover} onLeave={onCardLeave} />
       ))}
     </div>
   );

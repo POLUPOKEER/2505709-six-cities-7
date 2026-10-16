@@ -4,9 +4,10 @@ type OfferDataProps = {
   offerData: TOffer;
   onHover?: (id: string) => void;
   variant?: 'default' | 'favorites';
+  onLeave?: () => void;
 }
 
-function OfferCard({ offerData, onHover, variant = 'default' }: OfferDataProps) {
+function OfferCard({ offerData, onHover, onLeave, variant = 'default' }: OfferDataProps) {
 
   const isFavorites = variant === 'favorites';
   const cardSettings = isFavorites
@@ -26,7 +27,7 @@ function OfferCard({ offerData, onHover, variant = 'default' }: OfferDataProps) 
     };
 
   return (
-    <article className={cardSettings.cardClass} onMouseEnter={() => onHover?.(offerData.id)}>
+    <article className={cardSettings.cardClass} onMouseEnter={() => onHover?.(offerData.id)} onMouseLeave={() => onLeave?.()}>
       {offerData.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
