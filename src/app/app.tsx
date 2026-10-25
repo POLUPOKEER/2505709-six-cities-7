@@ -9,16 +9,15 @@ import PrivateRoute from '../components/privateRoute';
 import { ROUTES } from '../routes';
 
 type AppProps = {
-  offersData: TOffers;
   isAuth: boolean;
   offersFavoritesData: TOffers;
 }
 
-function App({ offersData, isAuth, offersFavoritesData }: AppProps) {
+function App({ isAuth, offersFavoritesData }: AppProps) {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={ROUTES.mainPage} element={<MainPage offersData={offersData} />} />
+        <Route path={ROUTES.mainPage} element={<MainPage />} />
         <Route path={ROUTES.login} element={<Login />} />
         <Route path={ROUTES.favorites} element={
           <PrivateRoute isAuth={isAuth}>
