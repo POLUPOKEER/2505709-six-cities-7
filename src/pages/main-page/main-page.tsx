@@ -12,6 +12,7 @@ import { changeCity, fillOffers } from '../../store/action';
 import mockoffers from '../../mocks/offers';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../routes';
+import PlacesSortingForm, { SortType } from '../../components/places-sorting-form';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -27,6 +28,28 @@ function MainPage(): JSX.Element {
       (offer) => offer.city.name === state.city
     )
   );
+  const sortedOffers = [...offersData];
+
+  const [sortType, setSortType] = useState<SortType>('popular');
+
+  switch (sortType) {
+    case 'price-low-to-high':
+      sortedOffers.sort((a, b) => a.price - b.price);
+      break;
+
+    case 'price-high-to-low':
+      sortedOffers.sort((a, b) => b.price - a.price);
+      break;
+
+    case 'top-rated':
+      sortedOffers.sort((a, b) => b.rating - a.rating);
+      break;
+
+    case 'popular':
+    default:
+      break;
+  }
+
 
   const [activeOfferId, setActiveOfferId] = useState('');
 
@@ -101,10 +124,13 @@ function MainPage(): JSX.Element {
                 {offersData.length} places to stay in {currentCity}
               </b>
 
-              {/* sorting */}
+              <PlacesSortingForm
+                currentSort={sortType}
+                onSortChange={setSortType}
+              />
 
               <OffersList
-                offersData={offersData}
+                offersData={sortedOffers}
                 onCardHover={handleCardHover}
                 onCardLeave={handleCardLeave}
               />
