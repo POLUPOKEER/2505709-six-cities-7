@@ -8,3 +8,8 @@ export const CITIES = [
   'Dusseldorf',
 ];
 
+export type SortType =
+  | 'popular'
+  | 'price-low-to-high'
+  | 'price-high-to-low'
+  | 'top-rated';

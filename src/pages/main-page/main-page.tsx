@@ -4,7 +4,7 @@ import OffersList from '../../components/offers-list';
 import Map from '../../components/map';
 import CitiesList from '../../components/cities-list';
 
-import { CITIES } from '../../const';
+import { CITIES, SortType } from '../../const';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity, fillOffers } from '../../store/action';
@@ -12,7 +12,7 @@ import { changeCity, fillOffers } from '../../store/action';
 import mockoffers from '../../mocks/offers';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../routes';
-import PlacesSortingForm, { SortType } from '../../components/places-sorting-form';
+import PlacesSortingForm from '../../components/places-sorting-form';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();

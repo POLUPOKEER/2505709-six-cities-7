@@ -1,10 +1,6 @@
 import { useState } from 'react';
+import { SortType } from '../const';
 
-export type SortType =
-  | 'popular'
-  | 'price-low-to-high'
-  | 'price-high-to-low'
-  | 'top-rated';
 
 type PlacesSortingFormProps = {
   currentSort: SortType;
