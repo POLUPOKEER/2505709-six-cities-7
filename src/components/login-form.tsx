@@ -1,13 +1,28 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { store } from '../store';
 import { loginAction } from '../store/api-actions';
-
+import { useAppSelector } from '../hooks';
+import { AuthorizationStatus } from '../const';
+import { ROUTES } from '../routes';
+import { useNavigate } from 'react-router-dom';
 type LoginFormData = {
   email: string;
   password: string;
 };
 
 function LoginForm() {
+
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(ROUTES.mainPage);
+    }
+  }, [authorizationStatus, navigate]);
+
   const [formData, setFormData] = useState<LoginFormData>({
     email: '',
     password: '',
