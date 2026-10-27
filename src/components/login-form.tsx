@@ -56,7 +56,7 @@ function LoginForm() {
     }
 
     // Заглушка вместо реальной авторизации
-    store.dispatch(loginAction({ login: formData.email, password: formData.password }));
+    store.dispatch(loginAction({ email: formData.email, password: formData.password }));
   };
 
   return (
