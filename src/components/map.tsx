@@ -49,14 +49,22 @@ function Map({
 
       leaflet
         .tileLayer(
-          'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=cb1_4mcu_1_386491d060a42dc62e56b5ff',
+          'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=ТВОЙ_КЛЮЧ',
           {
             attribution:
-              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attribution/">CARTO</a>',
-            maxZoom: 20
+              '&copy; OpenStreetMap contributors &copy; CARTO',
+            maxZoom: 20,
           }
         )
         .addTo(mapInstanceRef.current);
+    } else {
+      mapInstanceRef.current.setView(
+        [
+          city.location.latitude,
+          city.location.longitude,
+        ],
+        city.location.zoom
+      );
     }
   }, [offersData]);
 
