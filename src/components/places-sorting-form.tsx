@@ -34,7 +34,7 @@ function PlacesSortingForm({
             className="places__option"
             tabIndex={0}
             onClick={() => {
-              onSortChange('popular');
+              onSortChange(SortType.Popular);
               setIsvisible(!isVisible);
             }}
           >
@@ -45,7 +45,7 @@ function PlacesSortingForm({
             className="places__option"
             tabIndex={0}
             onClick={() => {
-              onSortChange('price-low-to-high');
+              onSortChange(SortType.PriceLowToHight);
               setIsvisible(!isVisible);
             }}
           >
@@ -56,7 +56,7 @@ function PlacesSortingForm({
             className="places__option"
             tabIndex={0}
             onClick={() => {
-              onSortChange('price-high-to-low');
+              onSortChange(SortType.PriceHighToLow);
               setIsvisible(!isVisible);
             }}
           >
@@ -67,7 +67,7 @@ function PlacesSortingForm({
             className="places__option"
             tabIndex={0}
             onClick={() => {
-              onSortChange('top-rated');
+              onSortChange(SortType.TopRated);
               setIsvisible(!isVisible);
             }}
           >

@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DEFAULT_CITY } from '../const';
-import { changeCity, loadOffers, setError, setOffersDataLoading } from './action';
+import { AuthorizationStatus, DEFAULT_CITY } from '../const';
+import { changeCity, loadOffers, requireAuthorization, setError, setOffersDataLoading, setUserEmail } from './action';
 import { TOffers } from '../types/offers';
 
 type TState = {
@@ -8,13 +8,17 @@ type TState = {
   offers: TOffers;
   error: string | null;
   isOffersDataLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
+  userEmail: string | null;
 }
 
 const initialState: TState = {
   city: DEFAULT_CITY,
   offers: [],
   error: null,
-  isOffersDataLoading: false
+  isOffersDataLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  userEmail: null
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -30,6 +34,12 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffersDataLoading, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setUserEmail, (state, action) => {
+      state.userEmail = action.payload;
     });
 });
 

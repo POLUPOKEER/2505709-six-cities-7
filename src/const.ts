@@ -8,15 +8,24 @@ export const CITIES = [
   'Dusseldorf',
 ];
 
-export type SortType =
-  | 'popular'
-  | 'price-low-to-high'
-  | 'price-high-to-low'
-  | 'top-rated';
+export enum SortType {
+  Popular = 'popular',
+  PriceLowToHight = 'price-low-to-high',
+  PriceHighToLow = 'price-high-to-low',
+  TopRated = 'top-rated'
+}
 
 export enum APIRoute {
   Offers = '/offers',
   Favorite = 'favorite',
+  Login = 'login',
+  Logout = 'logout'
+}
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;

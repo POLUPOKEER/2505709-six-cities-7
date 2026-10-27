@@ -9,9 +9,8 @@ import { CITIES, SortType } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity } from '../../store/action';
 
-import { Link } from 'react-router-dom';
-import { ROUTES } from '../../routes';
 import PlacesSortingForm from '../../components/places-sorting-form';
+import Header from '../../components/header';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -26,22 +25,22 @@ function MainPage(): JSX.Element {
   );
   const sortedOffers = [...offersData];
 
-  const [sortType, setSortType] = useState<SortType>('popular');
+  const [sortType, setSortType] = useState(SortType.Popular);
 
   switch (sortType) {
-    case 'price-low-to-high':
+    case SortType.PriceLowToHight:
       sortedOffers.sort((a, b) => a.price - b.price);
       break;
 
-    case 'price-high-to-low':
+    case SortType.PriceHighToLow:
       sortedOffers.sort((a, b) => b.price - a.price);
       break;
 
-    case 'top-rated':
+    case SortType.TopRated:
       sortedOffers.sort((a, b) => b.rating - a.rating);
       break;
 
-    case 'popular':
+    case SortType.Popular:
     default:
       break;
   }
@@ -65,35 +64,7 @@ function MainPage(): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link header__logo-link--active" to={ROUTES.mainPage}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={ROUTES.favorites}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={ROUTES.login}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">
           Cities

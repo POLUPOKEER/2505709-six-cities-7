@@ -9,17 +9,17 @@ import PrivateRoute from '../components/privateRoute';
 import { ROUTES } from '../routes';
 import { useAppSelector } from '../hooks';
 import LoadingScreen from '../components/spinner/spinner';
+import { AuthorizationStatus } from '../const';
 
 type AppProps = {
-  isAuth: boolean;
   offersFavoritesData: TOffers;
 }
 
-function App({ isAuth, offersFavoritesData }: AppProps) {
+function App({ offersFavoritesData }: AppProps) {
 
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
-
-  if (!isAuth || isOffersDataLoading) {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -31,7 +31,7 @@ function App({ isAuth, offersFavoritesData }: AppProps) {
         <Route path={ROUTES.mainPage} element={<MainPage />} />
         <Route path={ROUTES.login} element={<Login />} />
         <Route path={ROUTES.favorites} element={
-          <PrivateRoute isAuth={isAuth}>
+          <PrivateRoute>
             <Favorites offersData={offersFavoritesData} />
           </PrivateRoute>
         }
