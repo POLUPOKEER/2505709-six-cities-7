@@ -49,7 +49,7 @@ function Map({
 
       leaflet
         .tileLayer(
-          'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=ТВОЙ_КЛЮЧ',
+          'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=cb1_4mcu_1_386491d060a42dc62e56b5ff',
           {
             attribution:
               '&copy; OpenStreetMap contributors &copy; CARTO',
