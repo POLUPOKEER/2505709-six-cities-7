@@ -13,3 +13,10 @@ export type SortType =
   | 'price-low-to-high'
   | 'price-high-to-low'
   | 'top-rated';
+
+export enum APIRoute {
+  Offers = '/offers',
+  Favorite = 'favorite',
+}
+
+export const TIMEOUT_SHOW_ERROR = 2000;

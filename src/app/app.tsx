@@ -7,6 +7,8 @@ import NotFound from '../pages/not-found/not-found';
 import { TOffers } from '../types/offers';
 import PrivateRoute from '../components/privateRoute';
 import { ROUTES } from '../routes';
+import { useAppSelector } from '../hooks';
+import LoadingScreen from '../components/spinner/spinner';
 
 type AppProps = {
   isAuth: boolean;
@@ -14,6 +16,15 @@ type AppProps = {
 }
 
 function App({ isAuth, offersFavoritesData }: AppProps) {
+
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (!isAuth || isOffersDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
