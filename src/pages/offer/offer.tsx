@@ -1,18 +1,28 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
-import mockOffersDetails from '../../mocks/offers-details';
+import { Link, useParams } from 'react-router-dom';
 import Comments from '../../components/comments';
 import CommentsForm from '../../components/comments-form';
 import { ROUTES } from '../../routes';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchOfferDetails } from '../../store/api-actions';
+import Spinner from '../../components/spinner/spinner';
 function Offer() {
 
   const { id } = useParams();
+  const dispatch = useAppDispatch();
 
-  const offerDetailsData = mockOffersDetails.find(
-    (data) => data.id === id
+  const offerDetailsData = useAppSelector((state) => state.offerDetails);
+  const isOfferDetailsDataLoading = useAppSelector(
+    (state) => state.isOfferDetailsDataLoading
   );
+  useEffect(() => {
+    if (id !== undefined) {
+      dispatch(fetchOfferDetails(id));
+    }
+  }, [id, dispatch]);
 
-  if (offerDetailsData === undefined) {
-    return <Navigate to="/" replace />;
+  if (isOfferDetailsDataLoading || offerDetailsData === null) {
+    return <Spinner />;
   }
 
 

@@ -1,7 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
-import { changeCity, loadOffers, requireAuthorization, setError, setOffersDataLoading, setUserEmail } from './action';
+import { changeCity, loadOfferDetails, loadOffers, requireAuthorization, setError, setOfferDetailsDataLoading, setOffersDataLoading, setUserEmail } from './action';
 import { TOffers } from '../types/offers';
+import { TOfferDetails } from '../types/offerDetails';
 
 type TState = {
   city: string;
@@ -10,6 +11,8 @@ type TState = {
   isOffersDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   userEmail: string | null;
+  offerDetails: TOfferDetails | null;
+  isOfferDetailsDataLoading: boolean;
 }
 
 const initialState: TState = {
@@ -18,7 +21,9 @@ const initialState: TState = {
   error: null,
   isOffersDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
-  userEmail: null
+  userEmail: null,
+  offerDetails: null,
+  isOfferDetailsDataLoading: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -40,6 +45,12 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserEmail, (state, action) => {
       state.userEmail = action.payload;
+    })
+    .addCase(loadOfferDetails, (state, action) => {
+      state.offerDetails = action.payload;
+    })
+    .addCase(setOfferDetailsDataLoading, (state, action) => {
+      state.isOfferDetailsDataLoading = action.payload;
     });
 });
 

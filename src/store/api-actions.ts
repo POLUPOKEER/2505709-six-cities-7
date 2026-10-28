@@ -3,10 +3,11 @@ import { AppDispatch, store, TState } from '.';
 import { AxiosInstance } from 'axios';
 import { TOffers } from '../types/offers';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { loadOffers, requireAuthorization, setError, setOffersDataLoading, setUserEmail } from './action';
+import { loadOfferDetails, loadOffers, requireAuthorization, setError, setOfferDetailsDataLoading, setOffersDataLoading, setUserEmail } from './action';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
+import { TOfferDetails } from '../types/offerDetails';
 
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
@@ -22,6 +23,28 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
     dispatch(setOffersDataLoading(false));
   },
 );
+
+export const fetchOfferDetails = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOfferDetails',
+  async (offerId, { dispatch, extra: api }) => {
+    dispatch(setOfferDetailsDataLoading(true));
+
+    try {
+      const { data } = await api.get<TOfferDetails>(
+        `${APIRoute.Offers}/${offerId}`
+      );
+
+      dispatch(loadOfferDetails(data));
+    } finally {
+      dispatch(setOfferDetailsDataLoading(false));
+    }
+  },
+);
+
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;

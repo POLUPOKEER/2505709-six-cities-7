@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../routes';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { AuthorizationStatus } from '../const';
 import { logoutAction } from '../store/api-actions';
-import { store } from '../store';
 
 
 function Header(): JSX.Element {
@@ -11,8 +10,10 @@ function Header(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const userEmail = useAppSelector((state) => state.userEmail);
 
+  const dispatch = useAppDispatch();
+
   const handleLogout = () => {
-    store.dispatch(logoutAction());
+    dispatch(logoutAction());
   };
 
   return (
