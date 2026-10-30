@@ -1,8 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, DEFAULT_CITY } from '../const';
-import { changeCity, loadOfferDetails, loadOffers, requireAuthorization, setError, setOfferDetailsDataLoading, setOffersDataLoading, setUserEmail } from './action';
+import { changeCity, loadOffers, requireAuthorization, setError, setOffersDataLoading, setUserEmail } from './action';
 import { TOffers } from '../types/offers';
 import { TOfferDetails } from '../types/offerDetails';
+import { RequestStatus } from '../const';
+import { fetchOfferDetails } from './api-actions';
 
 type TState = {
   city: string;
@@ -11,8 +13,10 @@ type TState = {
   isOffersDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   userEmail: string | null;
+
   offerDetails: TOfferDetails | null;
-  isOfferDetailsDataLoading: boolean;
+  offerDetailsStatus: RequestStatus;
+  offerDetailsId: string | null;
 }
 
 const initialState: TState = {
@@ -22,8 +26,10 @@ const initialState: TState = {
   isOffersDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   userEmail: null,
+
   offerDetails: null,
-  isOfferDetailsDataLoading: false,
+  offerDetailsStatus: 'idle',
+  offerDetailsId: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -46,11 +52,20 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setUserEmail, (state, action) => {
       state.userEmail = action.payload;
     })
-    .addCase(loadOfferDetails, (state, action) => {
+    .addCase(fetchOfferDetails.pending, (state, action) => {
+      state.offerDetailsStatus = 'loading';
+      state.offerDetailsId = action.meta.arg;
+      state.offerDetails = null;
+    })
+
+    .addCase(fetchOfferDetails.fulfilled, (state, action) => {
+      state.offerDetailsStatus = 'success';
       state.offerDetails = action.payload;
     })
-    .addCase(setOfferDetailsDataLoading, (state, action) => {
-      state.isOfferDetailsDataLoading = action.payload;
+
+    .addCase(fetchOfferDetails.rejected, (state) => {
+      state.offerDetailsStatus = 'error';
+      state.offerDetails = null;
     });
 });
 

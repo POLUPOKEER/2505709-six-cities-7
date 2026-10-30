@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, store, TState } from '.';
+import type { AppDispatch, TState } from '.';
 import { AxiosInstance } from 'axios';
 import { TOffers } from '../types/offers';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { loadOfferDetails, loadOffers, requireAuthorization, setError, setOfferDetailsDataLoading, setOffersDataLoading, setUserEmail } from './action';
+import { loadOffers, requireAuthorization, setError, setOffersDataLoading, setUserEmail } from './action';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
@@ -24,25 +24,21 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const fetchOfferDetails = createAsyncThunk<void, string, {
-  dispatch: AppDispatch;
-  state: TState;
-  extra: AxiosInstance;
-}>(
-  'data/fetchOfferDetails',
-  async (offerId, { dispatch, extra: api }) => {
-    dispatch(setOfferDetailsDataLoading(true));
+export const fetchOfferDetails = createAsyncThunk<
+  TOfferDetails,
+  string,
+  {
+    extra: AxiosInstance;
+  }
+>(
+  'offer/fetchOfferDetails',
+  async (id, { extra: api }) => {
+    const { data } = await api.get<TOfferDetails>(
+      `${APIRoute.Offers}/${id}`
+    );
 
-    try {
-      const { data } = await api.get<TOfferDetails>(
-        `${APIRoute.Offers}/${offerId}`
-      );
-
-      dispatch(loadOfferDetails(data));
-    } finally {
-      dispatch(setOfferDetailsDataLoading(false));
-    }
-  },
+    return data;
+  }
 );
 
 
@@ -89,13 +85,18 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const clearErrorAction = createAsyncThunk(
+export const clearErrorAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+  }
+>(
   'app/clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
+  (_arg, { dispatch }) => {
+    setTimeout(() => {
+      dispatch(setError(null));
+    }, TIMEOUT_SHOW_ERROR);
   },
 );
 
