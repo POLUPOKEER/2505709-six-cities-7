@@ -11,3 +11,8 @@ export type TComment = {
 }
 
 export type TComments = TComment[];
+
+export type TFormState = {
+  comment: string;
+  rating: number;
+};

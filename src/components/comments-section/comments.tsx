@@ -3,13 +3,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchComments } from '../../store/api-actions';
 import Spinner from '../spinner/spinner';
 
-
-function Comments() {
+type CommentsProps = {
+  offerId: string;
+};
+function Comments({ offerId }: CommentsProps) {
 
   const comments = useAppSelector((state) => state.comments);
   const commentsStatus = useAppSelector((state) => state.commentsStatus);
 
-  const offerId = useAppSelector((state) => state.offerDetailsId);
 
   const dispatch = useAppDispatch();
 
@@ -33,7 +34,7 @@ function Comments() {
 
   return (
     <>
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
       <ul className="reviews__list">
         {comments.map((comment) => (
           <li key={comment.id} className="reviews__item">

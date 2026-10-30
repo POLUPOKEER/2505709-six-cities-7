@@ -32,3 +32,4 @@ export enum AuthorizationStatus {
 export const TIMEOUT_SHOW_ERROR = 2000;
 
 export type RequestStatus = 'idle' | 'loading' | 'success' | 'error';
+

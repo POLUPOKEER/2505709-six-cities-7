@@ -1,138 +1,102 @@
-import { FormEvent, ChangeEvent, useState } from 'react';
+import { FormEvent, ChangeEvent, useState, Fragment } from 'react';
+import { TFormState } from '../../types/comments';
+import { useAppDispatch } from '../../hooks';
+import { fetchComments, sendComment } from '../../store/api-actions';
 
-function CommentsForm() {
-  const [formData, setFormData] = useState({
-    rating: '',
-    review: '',
+type CommentsFormProps = {
+  offerId: string;
+};
+
+function CommentsForm({ offerId }: CommentsFormProps) {
+  const [formData, setFormData] = useState<TFormState>({
+    comment: '',
+    rating: 0,
   });
 
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      rating: evt.target.value,
+      rating: +evt.target.value,
     });
   };
 
   const handleReviewChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
-      review: evt.target.value,
+      comment: evt.target.value,
     });
   };
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    // eslint-disable-next-line no-console
-    console.log(formData);
+    await dispatch(
+      sendComment({
+        id: offerId,
+        comment: formData.comment,
+        rating: formData.rating,
+      })
+    ).unwrap();
+
+    dispatch(fetchComments(offerId));
   };
+  const ratingOptions = [
+    { value: 5, title: 'perfect' },
+    { value: 4, title: 'good' },
+    { value: 3, title: 'not bad' },
+    { value: 2, title: 'badly' },
+    { value: 1, title: 'terribly' },
+  ];
+  const isFormValid =
+    formData.comment.length >= 50 &&
+    formData.comment.length <= 300 &&
+    formData.rating >= 1 &&
+    formData.rating <= 5;
 
   return (
     <form
       className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={handleSubmit}
+      onSubmit={(evt) => {
+        void handleSubmit(evt);
+      }}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
 
+
       <div className="reviews__rating-form form__rating">
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="5"
-          id="5-stars"
-          type="radio"
-          checked={formData.rating === '5'}
-          onChange={handleRatingChange}
-        />
-        <label
-          htmlFor="5-stars"
-          className="reviews__rating-label form__rating-label"
-          title="perfect"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {ratingOptions.map(({ value, title }) => {
+          const id = `${value}-stars`;
 
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="4"
-          id="4-stars"
-          type="radio"
-          checked={formData.rating === '4'}
-          onChange={handleRatingChange}
-        />
-        <label
-          htmlFor="4-stars"
-          className="reviews__rating-label form__rating-label"
-          title="good"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+          return (
+            <Fragment key={value}>
+              <input
+                className="form__rating-input visually-hidden"
+                name="rating"
+                value={value}
+                id={id}
+                type="radio"
+                checked={formData.rating === value}
+                onChange={handleRatingChange}
+              />
 
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="3"
-          id="3-stars"
-          type="radio"
-          checked={formData.rating === '3'}
-          onChange={handleRatingChange}
-        />
-        <label
-          htmlFor="3-stars"
-          className="reviews__rating-label form__rating-label"
-          title="not bad"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="2"
-          id="2-stars"
-          type="radio"
-          checked={formData.rating === '2'}
-          onChange={handleRatingChange}
-        />
-        <label
-          htmlFor="2-stars"
-          className="reviews__rating-label form__rating-label"
-          title="badly"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value="1"
-          id="1-star"
-          type="radio"
-          checked={formData.rating === '1'}
-          onChange={handleRatingChange}
-        />
-        <label
-          htmlFor="1-star"
-          className="reviews__rating-label form__rating-label"
-          title="terribly"
-        >
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+              <label
+                htmlFor={id}
+                className="reviews__rating-label form__rating-label"
+                title={title}
+              >
+                <svg className="form__star-image" width="37" height="33">
+                  <use xlinkHref="#icon-star"></use>
+                </svg>
+              </label>
+            </Fragment>
+          );
+        })}
       </div>
 
       <textarea
@@ -140,7 +104,7 @@ function CommentsForm() {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={formData.review}
+        value={formData.comment}
         onChange={handleReviewChange}
       />
 
@@ -155,6 +119,7 @@ function CommentsForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
+          disabled={!isFormValid}
         >
           Submit
         </button>
