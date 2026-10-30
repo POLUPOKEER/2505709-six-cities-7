@@ -1,12 +1,36 @@
-import comments from '../mocks/comments';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchComments } from '../../store/api-actions';
+import Spinner from '../spinner/spinner';
 
-type commentsProps = {
-  offerId?: string;
-}
 
+function Comments() {
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function Comments({ offerId = '' }: commentsProps) {
+  const comments = useAppSelector((state) => state.comments);
+  const commentsStatus = useAppSelector((state) => state.commentsStatus);
+
+  const offerId = useAppSelector((state) => state.offerDetailsId);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (offerId) {
+      dispatch(fetchComments(offerId));
+    }
+  }, [dispatch, offerId]);
+
+  if (commentsStatus === 'idle' || commentsStatus === 'loading') {
+    return <Spinner />;
+  }
+
+  if (commentsStatus === 'error') {
+    return <p>Failed to load comments. Please try again later.</p>;
+  }
+
+  if (comments.length === 0) {
+    return <p>Комментариев пока нет</p>;
+  }
+
   return (
     <>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>

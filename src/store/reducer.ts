@@ -4,7 +4,8 @@ import { changeCity, loadOffers, requireAuthorization, setError, setOffersDataLo
 import { TOffers } from '../types/offers';
 import { TOfferDetails } from '../types/offerDetails';
 import { RequestStatus } from '../const';
-import { fetchOfferDetails } from './api-actions';
+import { fetchComments, fetchOfferDetails } from './api-actions';
+import { TComment } from '../types/comments';
 
 type TState = {
   city: string;
@@ -17,6 +18,9 @@ type TState = {
   offerDetails: TOfferDetails | null;
   offerDetailsStatus: RequestStatus;
   offerDetailsId: string | null;
+
+  comments: TComment[];
+  commentsStatus: RequestStatus;
 }
 
 const initialState: TState = {
@@ -30,6 +34,9 @@ const initialState: TState = {
   offerDetails: null,
   offerDetailsStatus: 'idle',
   offerDetailsId: null,
+
+  comments: [],
+  commentsStatus: 'idle',
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -57,15 +64,25 @@ export const reducer = createReducer(initialState, (builder) => {
       state.offerDetailsId = action.meta.arg;
       state.offerDetails = null;
     })
-
     .addCase(fetchOfferDetails.fulfilled, (state, action) => {
       state.offerDetailsStatus = 'success';
       state.offerDetails = action.payload;
     })
-
     .addCase(fetchOfferDetails.rejected, (state) => {
       state.offerDetailsStatus = 'error';
       state.offerDetails = null;
+    })
+    .addCase(fetchComments.pending, (state) => {
+      state.commentsStatus = 'loading';
+      state.comments = [];
+    })
+    .addCase(fetchComments.fulfilled, (state, action) => {
+      state.commentsStatus = 'success';
+      state.comments = action.payload;
+    })
+    .addCase(fetchComments.rejected, (state) => {
+      state.commentsStatus = 'error';
+      state.comments = [];
     });
 });
 

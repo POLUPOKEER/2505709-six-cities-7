@@ -8,6 +8,7 @@ import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { TOfferDetails } from '../types/offerDetails';
+import { TComment } from '../types/comments';
 
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
@@ -41,12 +42,29 @@ export const fetchOfferDetails = createAsyncThunk<
   }
 );
 
+export const fetchComments = createAsyncThunk<
+  TComment[],
+  string,
+  {
+    extra: AxiosInstance;
+  }
+>(
+  'offer/fetchComments',
+  async (id, { extra: api }) => {
+    const { data } = await api.get<TComment[]>(
+      `${APIRoute.Comments}/${id}`
+    );
+
+    return data;
+  }
+);
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: TState;
   extra: AxiosInstance;
-}>(
+}
+>(
   'user/checkAuth',
   async (_arg, { dispatch, extra: api }) => {
     try {
@@ -62,7 +80,8 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   dispatch: AppDispatch;
   state: TState;
   extra: AxiosInstance;
-}>(
+}
+>(
   'user/login',
   async ({ email, password }, { dispatch, extra: api }) => {
     const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
@@ -76,7 +95,8 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: TState;
   extra: AxiosInstance;
-}>(
+}
+>(
   'user/logout',
   async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoute.Logout);
