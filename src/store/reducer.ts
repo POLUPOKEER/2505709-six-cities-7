@@ -4,7 +4,7 @@ import { changeCity, loadOffers, requireAuthorization, setError, setOffersDataLo
 import { TOffers } from '../types/offers';
 import { TOfferDetails } from '../types/offerDetails';
 import { RequestStatus } from '../const';
-import { fetchComments, fetchOfferDetails } from './api-actions';
+import { fetchComments, fetchOfferDetails, sendComment } from './api-actions';
 import { TComment } from '../types/comments';
 
 type TState = {
@@ -83,6 +83,9 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(fetchComments.rejected, (state) => {
       state.commentsStatus = 'error';
       state.comments = [];
+    })
+    .addCase(sendComment.fulfilled, (state, action) => {
+      state.comments.unshift(action.payload);
     });
 });
 

@@ -1,14 +1,14 @@
 import { FormEvent, ChangeEvent, useState, Fragment } from 'react';
-import { TFormState } from '../../types/comments';
+import { TCommentFormData } from '../../types/comments';
 import { useAppDispatch } from '../../hooks';
-import { fetchComments, sendComment } from '../../store/api-actions';
+import { sendComment } from '../../store/api-actions';
 
 type CommentsFormProps = {
   offerId: string;
 };
 
 function CommentsForm({ offerId }: CommentsFormProps) {
-  const [formData, setFormData] = useState<TFormState>({
+  const [formData, setFormData] = useState<TCommentFormData>({
     comment: '',
     rating: 0,
   });
@@ -39,8 +39,6 @@ function CommentsForm({ offerId }: CommentsFormProps) {
         rating: formData.rating,
       })
     ).unwrap();
-
-    dispatch(fetchComments(offerId));
   };
   const ratingOptions = [
     { value: 5, title: 'perfect' },

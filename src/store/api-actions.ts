@@ -8,7 +8,7 @@ import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { TOfferDetails } from '../types/offerDetails';
-import { TComment, TFormState } from '../types/comments';
+import { TComment, TCommentFormData } from '../types/comments';
 
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
@@ -59,15 +59,24 @@ export const fetchComments = createAsyncThunk<
   }
 );
 
-export const sendComment = createAsyncThunk<TFormState, { id: string; comment: string; rating: number }, {
-  extra: AxiosInstance;
-}
+type TSendCommentParams = TCommentFormData & {
+  id: string;
+};
+export const sendComment = createAsyncThunk<
+  TComment,
+  TSendCommentParams,
+  {
+    extra: AxiosInstance;
+  }
 >(
   'offer/sendComment',
   async ({ id, comment, rating }, { extra: api }) => {
-    const { data } = await api.post<TFormState>(
+    const { data } = await api.post<TComment>(
       `${APIRoute.Comments}/${id}`,
-      { comment, rating }
+      {
+        comment,
+        rating,
+      }
     );
 
     return data;
