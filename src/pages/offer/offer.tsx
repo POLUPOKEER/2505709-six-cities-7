@@ -2,11 +2,11 @@ import { Navigate, useParams } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import { fetchNearbyOffers, fetchOfferDetails } from '../../store/api-actions';
+import { fetchComments, fetchNearbyOffers, fetchOfferDetails } from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import Header from '../../components/header';
 import CommentsSection from '../../components/comments-section/comments-section';
-import OfferCard from '../../components/offer-card';
+import OfferNearSection from '../../components/offer-near-section';
 function Offer() {
 
   const { id } = useParams();
@@ -16,13 +16,13 @@ function Offer() {
   const offerDetailsStatus = useAppSelector((state) => state.offerDetailsStatus);
   const offerDetailsId = useAppSelector((state) => state.offerDetailsId);
 
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
   const nearbyOffersStatus = useAppSelector((state) => state.nearbyOffersStatus);
 
   useEffect(() => {
     if (id !== undefined) {
       dispatch(fetchOfferDetails(id));
       dispatch(fetchNearbyOffers(id));
+      dispatch(fetchComments(id));
     }
   }, [id, dispatch]);
 
@@ -131,18 +131,13 @@ function Offer() {
                   </p>
                 </div>
               </div>
-              <CommentsSection offerId={offerDetails.id} />
+              <CommentsSection />
             </div>
           </div>
           <section className="offer__map map"></section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {nearbyOffers.map((offer) => (<OfferCard key={offer.id} offerData={offer} />))}
-            </div>
-          </section>
+          <OfferNearSection />
         </div>
       </main>
     </div >

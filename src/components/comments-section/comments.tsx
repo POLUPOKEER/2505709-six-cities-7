@@ -1,24 +1,12 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchComments } from '../../store/api-actions';
+import { useAppSelector } from '../../hooks';
 import Spinner from '../spinner/spinner';
 
-type CommentsProps = {
-  offerId: string;
-};
-function Comments({ offerId }: CommentsProps) {
+
+function Comments() {
 
   const comments = useAppSelector((state) => state.comments);
   const commentsStatus = useAppSelector((state) => state.commentsStatus);
 
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (offerId) {
-      dispatch(fetchComments(offerId));
-    }
-  }, [dispatch, offerId]);
 
   if (commentsStatus === 'idle' || commentsStatus === 'loading') {
     return <Spinner />;

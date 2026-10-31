@@ -1,13 +1,13 @@
 import { FormEvent, ChangeEvent, useState, Fragment } from 'react';
 import { TCommentFormData } from '../../types/comments';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendComment } from '../../store/api-actions';
 
-type CommentsFormProps = {
-  offerId: string;
-};
 
-function CommentsForm({ offerId }: CommentsFormProps) {
+function CommentsForm() {
+
+  const offerId = useAppSelector((state) => state.offerDetailsId);
+
   const [formData, setFormData] = useState<TCommentFormData>({
     comment: '',
     rating: 0,
@@ -34,7 +34,7 @@ function CommentsForm({ offerId }: CommentsFormProps) {
 
     await dispatch(
       sendComment({
-        id: offerId,
+        id: offerId as string,
         comment: formData.comment,
         rating: formData.rating,
       })
