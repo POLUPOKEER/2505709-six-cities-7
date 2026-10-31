@@ -42,6 +42,23 @@ export const fetchOfferDetails = createAsyncThunk<
   }
 );
 
+export const fetchNearbyOffers = createAsyncThunk<
+  TOffers,
+  string,
+  {
+    extra: AxiosInstance;
+  }
+>(
+  'offer/fetchNearbyOffers',
+  async (id, { extra: api }) => {
+    const { data } = await api.get<TOffers>(
+      `${APIRoute.Offers}/${id}/nearby`
+    );
+
+    return data?.slice(0, 3);
+  }
+);
+
 export const fetchComments = createAsyncThunk<
   TComment[],
   string,

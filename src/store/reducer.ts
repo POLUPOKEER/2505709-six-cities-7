@@ -4,7 +4,7 @@ import { changeCity, loadOffers, requireAuthorization, setError, setOffersDataLo
 import { TOffers } from '../types/offers';
 import { TOfferDetails } from '../types/offerDetails';
 import { RequestStatus } from '../const';
-import { fetchComments, fetchOfferDetails, sendComment } from './api-actions';
+import { fetchComments, fetchNearbyOffers, fetchOfferDetails, sendComment } from './api-actions';
 import { TComment } from '../types/comments';
 
 type TState = {
@@ -21,6 +21,9 @@ type TState = {
 
   comments: TComment[];
   commentsStatus: RequestStatus;
+
+  nearbyOffers: TOffers;
+  nearbyOffersStatus: RequestStatus;
 }
 
 const initialState: TState = {
@@ -37,6 +40,9 @@ const initialState: TState = {
 
   comments: [],
   commentsStatus: 'idle',
+
+  nearbyOffers: [],
+  nearbyOffersStatus: 'idle',
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -86,6 +92,18 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(sendComment.fulfilled, (state, action) => {
       state.comments.unshift(action.payload);
+    })
+    .addCase(fetchNearbyOffers.pending, (state) => {
+      state.nearbyOffersStatus = 'loading';
+      state.nearbyOffers = [];
+    })
+    .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
+      state.nearbyOffersStatus = 'success';
+      state.nearbyOffers = action.payload;
+    })
+    .addCase(fetchNearbyOffers.rejected, (state) => {
+      state.nearbyOffersStatus = 'error';
+      state.nearbyOffers = [];
     });
 });
 
