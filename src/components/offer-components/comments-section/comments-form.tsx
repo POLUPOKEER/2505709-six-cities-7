@@ -1,7 +1,7 @@
 import { FormEvent, ChangeEvent, useState, Fragment } from 'react';
-import { TCommentFormData } from '../../types/comments';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { sendComment } from '../../store/api-actions';
+import { TCommentFormData } from '../../../types/comments';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { sendComment } from '../../../store/api-actions';
 
 
 function CommentsForm() {

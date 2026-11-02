@@ -1,5 +1,5 @@
-import { AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus } from '../../../const';
+import { useAppSelector } from '../../../hooks';
 import Comments from './comments';
 import CommentsForm from './comments-form';
 

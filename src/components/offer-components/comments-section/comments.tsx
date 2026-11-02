@@ -1,5 +1,5 @@
-import { useAppSelector } from '../../hooks';
-import Spinner from '../spinner/spinner';
+import { useAppSelector } from '../../../hooks';
+import Spinner from '../../spinner/spinner';
 
 
 function Comments() {
