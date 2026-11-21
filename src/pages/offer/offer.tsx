@@ -8,16 +8,18 @@ import Header from '../../components/header';
 import CommentsSection from '../../components/offer-components/comments-section/comments-section';
 
 import MapAndOffersNearSection from '../../components/offer-components/map-and-offers-near-section/mapAndOffersNearSection';
+import { getOfferDetails, getOfferDetailsId, getOfferDetailsStatus } from '../../store/offer-details/offer-details.selectors';
+import { getnearbyOffersStatus } from '../../store/near-by-offers/near-by-offers-selectors';
 function Offer() {
 
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
-  const offerDetails = useAppSelector((state) => state.offerDetails);
-  const offerDetailsStatus = useAppSelector((state) => state.offerDetailsStatus);
-  const offerDetailsId = useAppSelector((state) => state.offerDetailsId);
+  const offerDetails = useAppSelector(getOfferDetails);
+  const offerDetailsStatus = useAppSelector(getOfferDetailsStatus);
+  const offerDetailsId = useAppSelector(getOfferDetailsId);
 
-  const nearbyOffersStatus = useAppSelector((state) => state.nearbyOffersStatus);
+  const nearbyOffersStatus = useAppSelector(getnearbyOffersStatus);
 
   useEffect(() => {
     if (id !== undefined) {

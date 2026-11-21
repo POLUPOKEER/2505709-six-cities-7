@@ -3,12 +3,13 @@ import { ROUTES } from '../routes';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { AuthorizationStatus } from '../const';
 import { logoutAction } from '../store/api-actions';
+import { getAuthorizationStatus, getUserEmail } from '../store/user-process/user-process-selectors';
 
 
 function Header(): JSX.Element {
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const userEmail = useAppSelector((state) => state.userEmail);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userEmail = useAppSelector(getUserEmail);
 
   const dispatch = useAppDispatch();
 

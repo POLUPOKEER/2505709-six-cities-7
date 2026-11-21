@@ -5,6 +5,7 @@ import { useAppSelector } from '../hooks';
 import { AuthorizationStatus } from '../const';
 import { ROUTES } from '../routes';
 import { useNavigate } from 'react-router-dom';
+import { getAuthorizationStatus } from '../store/user-process/user-process-selectors';
 type LoginFormData = {
   email: string;
   password: string;
@@ -12,9 +13,7 @@ type LoginFormData = {
 
 function LoginForm() {
 
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const navigate = useNavigate();
   useEffect(() => {

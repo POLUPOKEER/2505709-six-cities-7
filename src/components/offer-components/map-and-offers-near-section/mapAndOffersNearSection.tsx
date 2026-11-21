@@ -4,13 +4,14 @@ import OffersNear from './offer-near-section';
 import Map from '../../map';
 import { TOfferDetails } from '../../../types/offerDetails';
 import { TOffer } from '../../../types/offers';
+import { getnearbyOffers, getnearbyOffersStatus } from '../../../store/near-by-offers/near-by-offers-selectors';
 
 type MapAndOffersNearSectionProps = {
   currentOffer: TOfferDetails;
 };
 export default function MapAndOffersNearSection({ currentOffer }: MapAndOffersNearSectionProps) {
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
-  const nearbyOffersStatus = useAppSelector((state) => state.nearbyOffersStatus);
+  const nearbyOffers = useAppSelector(getnearbyOffers);
+  const nearbyOffersStatus = useAppSelector(getnearbyOffersStatus);
   const offersForMap = [currentOffer as TOffer, ...nearbyOffers];
 
   if (nearbyOffersStatus === 'idle' || nearbyOffersStatus === 'loading') {

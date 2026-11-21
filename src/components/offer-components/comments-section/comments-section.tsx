@@ -1,5 +1,6 @@
 import { AuthorizationStatus } from '../../../const';
 import { useAppSelector } from '../../../hooks';
+import { getAuthorizationStatus } from '../../../store/user-process/user-process-selectors';
 import Comments from './comments';
 import CommentsForm from './comments-form';
 
@@ -7,7 +8,7 @@ import CommentsForm from './comments-form';
 export default function CommentsSection() {
 
 
-  const isAuthenticated = useAppSelector((state) => state.authorizationStatus === AuthorizationStatus.Auth);
+  const isAuthenticated = useAppSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
 
 
   return (

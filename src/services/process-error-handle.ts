@@ -1,5 +1,5 @@
 import { store } from '../store';
-import { setError } from '../store/action';
+import { setError } from '../store/app-error/app-error-slice';
 import { clearErrorAction } from '../store/api-actions';
 
 export const processErrorHandle = (message: string): void => {

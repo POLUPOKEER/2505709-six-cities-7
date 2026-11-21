@@ -2,11 +2,12 @@ import { FormEvent, ChangeEvent, useState, Fragment } from 'react';
 import { TCommentFormData } from '../../../types/comments';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { sendComment } from '../../../store/api-actions';
+import { getOfferDetailsId } from '../../../store/offer-details/offer-details.selectors';
 
 
 function CommentsForm() {
 
-  const offerId = useAppSelector((state) => state.offerDetailsId);
+  const offerId = useAppSelector(getOfferDetailsId);
 
   const [formData, setFormData] = useState<TCommentFormData>({
     comment: '',

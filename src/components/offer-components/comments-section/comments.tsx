@@ -1,11 +1,12 @@
 import { useAppSelector } from '../../../hooks';
+import { getComments, getCommentsStatus } from '../../../store/comments/comments-selectors';
 import Spinner from '../../spinner/spinner';
 
 
 function Comments() {
 
-  const comments = useAppSelector((state) => state.comments);
-  const commentsStatus = useAppSelector((state) => state.commentsStatus);
+  const comments = useAppSelector(getComments);
+  const commentsStatus = useAppSelector(getCommentsStatus);
 
 
   if (commentsStatus === 'idle' || commentsStatus === 'loading') {

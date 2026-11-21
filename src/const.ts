@@ -33,3 +33,13 @@ export const TIMEOUT_SHOW_ERROR = 2000;
 
 export type RequestStatus = 'idle' | 'loading' | 'success' | 'error';
 
+export enum NameSpace {
+  AppErrorData = 'APP_ERROR_DATA',
+  UserData = 'USER_DATA',
+  OffersData = 'OFFERS_DATA',
+  OfferDetailsData = 'OFFER_DETAIL_DATA',
+  CommentsData = 'COMMENTS_DATA',
+  NearByOffersData = 'NEAR_BY_OFFERS_DATA'
+}
+
+

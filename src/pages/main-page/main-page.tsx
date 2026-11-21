@@ -5,21 +5,22 @@ import CitiesList from '../../components/cities-list';
 import { CITIES, SortType } from '../../const';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/offers/offers-slice';
 
 import Header from '../../components/header';
 import MainSection from '../../components/main-page-components/main-section';
+import { getCity, getOffers } from '../../store/offers/offers-selectors';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
 
-  const currentCity = useAppSelector((state) => state.city);
+  const currentCity = useAppSelector(getCity);
 
-  const offersData = useAppSelector((state) =>
-    state.offers.filter(
-      (offer) => offer.city.name === state.city
-    )
+  const offers = useAppSelector(getOffers);
+
+  const offersData = offers.filter(
+    (offer) => offer.city.name === currentCity
   );
   const sortedOffers = [...offersData];
 

@@ -2,8 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { AppDispatch, TState } from '.';
 import { AxiosInstance } from 'axios';
 import { TOffers } from '../types/offers';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { loadOffers, requireAuthorization, setError, setOffersDataLoading, setUserEmail } from './action';
+import { APIRoute, TIMEOUT_SHOW_ERROR } from '../const';
+import { setError } from './app-error/app-error-slice';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
@@ -11,17 +11,15 @@ import { TOfferDetails } from '../types/offerDetails';
 import { TComment, TCommentFormData } from '../types/comments';
 
 
-export const fetchOffersAction = createAsyncThunk<void, undefined, {
+export const fetchOffersAction = createAsyncThunk<TOffers, undefined, {
   dispatch: AppDispatch;
   state: TState;
   extra: AxiosInstance;
 }>(
   'data/fetchOffers',
-  async (_arg, { dispatch, extra: api }) => {
-    dispatch(setOffersDataLoading(true));
+  async (_arg, { extra: api }) => {
     const { data } = await api.get<TOffers>(APIRoute.Offers);
-    dispatch(loadOffers(data));
-    dispatch(setOffersDataLoading(false));
+    return data;
   },
 );
 
@@ -107,28 +105,22 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }
 >(
   'user/checkAuth',
-  async (_arg, { dispatch, extra: api }) => {
-    try {
-      await api.get(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    }
-  },
+  async (_arg, { extra: api }) => {
+    await api.get(APIRoute.Login);
+  }
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<string, AuthData, {
   dispatch: AppDispatch;
   state: TState;
   extra: AxiosInstance;
 }
 >(
   'user/login',
-  async ({ email, password }, { dispatch, extra: api }) => {
+  async ({ email, password }, { extra: api }) => {
     const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(token);
-    dispatch(setUserEmail(email));
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    return email;
   },
 );
 
@@ -139,10 +131,9 @@ export const logoutAction = createAsyncThunk<void, undefined, {
 }
 >(
   'user/logout',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );
 

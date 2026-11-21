@@ -10,6 +10,8 @@ import { ROUTES } from '../routes';
 import { useAppSelector } from '../hooks';
 import LoadingScreen from '../components/spinner/spinner';
 import { AuthorizationStatus } from '../const';
+import { getOffersStatus } from '../store/offers/offers-selectors';
+import { getAuthorizationStatus } from '../store/user-process/user-process-selectors';
 
 type AppProps = {
   offersFavoritesData: TOffers;
@@ -17,9 +19,9 @@ type AppProps = {
 
 function App({ offersFavoritesData }: AppProps) {
 
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+  const OffersStatus = useAppSelector(getOffersStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  if (authorizationStatus === AuthorizationStatus.Unknown || OffersStatus === 'loading') {
     return (
       <LoadingScreen />
     );
