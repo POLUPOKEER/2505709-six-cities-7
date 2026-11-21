@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import OffersList from '../../components/offers-list';
-import Map from '../../components/map';
 import CitiesList from '../../components/cities-list';
 
 import { CITIES, SortType } from '../../const';
@@ -9,8 +7,8 @@ import { CITIES, SortType } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity } from '../../store/action';
 
-import PlacesSortingForm from '../../components/places-sorting-form';
 import Header from '../../components/header';
+import MainSection from '../../components/main-page-components/main-section';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -46,21 +44,10 @@ function MainPage(): JSX.Element {
   }
 
 
-  const [activeOfferId, setActiveOfferId] = useState('');
-
   const handleCityChange = (city: string) => {
     dispatch(changeCity(city));
   };
 
-  const handleCardHover = (id: string) => {
-    if (id !== activeOfferId) {
-      setActiveOfferId(id);
-    }
-  };
-
-  const handleCardLeave = () => {
-    setActiveOfferId('');
-  };
 
   return (
     <div className="page page--gray page--main">
@@ -79,39 +66,13 @@ function MainPage(): JSX.Element {
           </section>
         </div>
 
-        <div className="cities">
-          <div className="cities__places-container container">
-
-            <section className="cities__places places">
-              <h2 className="visually-hidden">
-                Places
-              </h2>
-
-              <b className="places__found">
-                {offersData.length} places to stay in {currentCity}
-              </b>
-
-              <PlacesSortingForm
-                currentSort={sortType}
-                onSortChange={setSortType}
-              />
-
-              <OffersList
-                offersData={sortedOffers}
-                onCardHover={handleCardHover}
-                onCardLeave={handleCardLeave}
-              />
-            </section>
-
-            <div className="cities__right-section">
-              <Map
-                offersData={offersData}
-                activeOfferId={activeOfferId}
-              />
-            </div>
-
-          </div>
-        </div>
+        <MainSection
+          offersData={offersData}
+          currentCity={currentCity}
+          sortType={sortType}
+          setSortType={setSortType}
+          sortedOffers={sortedOffers}
+        />
       </main>
     </div>
   );
