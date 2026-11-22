@@ -9,6 +9,7 @@ import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { TOfferDetails } from '../types/offerDetails';
 import { TComment, TCommentFormData } from '../types/comments';
+import { TFavoriteData } from '../types/favorite-data';
 
 
 export const fetchOffersAction = createAsyncThunk<TOffers, undefined, {
@@ -21,6 +22,35 @@ export const fetchOffersAction = createAsyncThunk<TOffers, undefined, {
     const { data } = await api.get<TOffers>(APIRoute.Offers);
     return data;
   },
+);
+
+export const fetchFavoriteOffers = createAsyncThunk<TOffers, undefined, {
+  dispatch: AppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}>(
+  'data/fetchFavoriteOffers',
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<TOffers>(APIRoute.Favorite);
+    return data;
+  }
+);
+
+export const changeOfferFavoriteStatus = createAsyncThunk<
+  TOffers, TFavoriteData,
+  {
+    dispatch: AppDispatch;
+    state: TState;
+    extra: AxiosInstance;
+  }
+>(
+  'data/changeOffersFavoriteStatus',
+  async ({ id, status }, { extra: api }) => {
+    const { data } = await api.post<TOffers>(
+      `${APIRoute.Favorite}/${id}/${status}`
+    );
+    return data;
+  }
 );
 
 export const fetchOfferDetails = createAsyncThunk<
@@ -152,4 +182,5 @@ export const clearErrorAction = createAsyncThunk<
     }, TIMEOUT_SHOW_ERROR);
   },
 );
+
 

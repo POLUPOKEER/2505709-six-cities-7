@@ -39,7 +39,8 @@ export enum NameSpace {
   OffersData = 'OFFERS_DATA',
   OfferDetailsData = 'OFFER_DETAIL_DATA',
   CommentsData = 'COMMENTS_DATA',
-  NearByOffersData = 'NEAR_BY_OFFERS_DATA'
+  NearByOffersData = 'NEAR_BY_OFFERS_DATA',
+  FavoriteOffersData = 'FAVORITE_OFFERS_DATA'
 }
 
 
