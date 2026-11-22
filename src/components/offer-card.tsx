@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import { TOffer } from '../types/offers';
-import { getAuthorizationStatus } from '../store/user-process/user-process-selectors';
-import { AuthorizationStatus } from '../const';
 import { useFavorite } from '../hooks/use-favorite';
-import { useAppSelector } from '../store/hooks';
+
 type OfferDataProps = {
   offerData: TOffer;
   onHover?: (id: string) => void;
@@ -13,7 +11,6 @@ type OfferDataProps = {
 
 function OfferCard({ offerData, onHover, onLeave, variant = 'default' }: OfferDataProps) {
 
-  const userAuthorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const { isFavorite, handleFavoriteClick } = useFavorite(offerData.id);
 
@@ -50,7 +47,7 @@ function OfferCard({ offerData, onHover, onLeave, variant = 'default' }: OfferDa
             <b className="place-card__price-value">&euro;{offerData.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button disabled={userAuthorizationStatus !== AuthorizationStatus.Auth}
+          <button
             onClick={handleFavoriteClick} className={`place-card__bookmark-button button
               ${isFavorite ? 'place-card__bookmark-button--active' : ''}`}
             type="button"

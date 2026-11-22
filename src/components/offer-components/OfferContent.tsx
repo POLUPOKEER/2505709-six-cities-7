@@ -3,13 +3,11 @@ import { useFavorite } from '../../hooks/use-favorite';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getnearbyOffersStatus } from '../../store/near-by-offers/near-by-offers-selectors';
 import { getOfferDetails, getOfferDetailsId, getOfferDetailsStatus } from '../../store/offer-details/offer-details.selectors';
-import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
 import { fetchComments, fetchNearbyOffers, fetchOfferDetails } from '../../store/api-actions';
 import Spinner from '../spinner/spinner';
 import { Navigate } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import Header from '../header';
-import { AuthorizationStatus } from '../../const';
 import CommentsSection from './comments-section/comments-section';
 import MapAndOffersNearSection from './map-and-offers-near-section/mapAndOffersNearSection';
 
@@ -25,7 +23,6 @@ export default function OfferContent({ id }: OfferContentProps) {
   const offerDetailsId = useAppSelector(getOfferDetailsId);
 
   const nearbyOffersStatus = useAppSelector(getnearbyOffersStatus);
-  const userAuthorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const { isFavorite, handleFavoriteClick } = useFavorite(id);
 
@@ -83,7 +80,6 @@ export default function OfferContent({ id }: OfferContentProps) {
                 <button
                   className={`offer__bookmark-button button ${isFavorite ? 'offer__bookmark-button--active' : ''}`}
                   type="button"
-                  disabled={userAuthorizationStatus !== AuthorizationStatus.Auth}
                   onClick={handleFavoriteClick}
                 >
                   <svg
