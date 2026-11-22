@@ -98,7 +98,7 @@ export const sendComment = createAsyncThunk<
   }
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<string, undefined, {
   dispatch: AppDispatch;
   state: TState;
   extra: AxiosInstance;
@@ -106,7 +106,8 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 >(
   'user/checkAuth',
   async (_arg, { extra: api }) => {
-    await api.get(APIRoute.Login);
+    const { data: { email } } = await api.get<UserData>(APIRoute.Login);
+    return email;
   }
 );
 
