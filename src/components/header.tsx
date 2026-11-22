@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../routes';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { AuthorizationStatus } from '../const';
 import { logoutAction } from '../store/api-actions';
 import { getAuthorizationStatus, getUserEmail } from '../store/user-process/user-process-selectors';
+import { getFavoriteOffers } from '../store/favorite-offers/favorite-offers-selectors';
 
 
 function Header(): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
   const userEmail = useAppSelector(getUserEmail);
 
   const dispatch = useAppDispatch();
@@ -42,7 +44,7 @@ function Header(): JSX.Element {
                       </span>
 
                       <span className="header__favorite-count">
-                        3
+                        {favoriteOffers.length}
                       </span>
                     </Link>
                   </li>

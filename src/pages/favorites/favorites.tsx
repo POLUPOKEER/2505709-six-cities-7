@@ -1,50 +1,30 @@
-import { TOffers } from '../../types/offers';
-import OfferCard from '../../components/offer-card';
+
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import Header from '../../components/header';
+import { useAppSelector } from '../../store/hooks';
+import { getFavoriteOffers, getFavoriteOffersStatus } from '../../store/favorite-offers/favorite-offers-selectors';
+import Spinner from '../../components/spinner/spinner';
+import FavoritesEmptySection from '../../components/favorites-page-components/favorites-empty-section';
+import FavoritesMainSection from '../../components/favorites-page-components/favorites-main-section';
 
-type favoritesProps = {
-  offersData: TOffers;
-}
 
-function Favorites({ offersData }: favoritesProps) {
+function Favorites() {
+  const favoriteOffersStatus = useAppSelector(getFavoriteOffersStatus);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
-  const cities = [...new Set(
-    offersData.map((offer) => offer.city.name)
-  )];
+
+  if (favoriteOffersStatus === 'loading') {
+    return <Spinner />;
+  }
 
   return (
     <div className="page">
       <Header />
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {cities.map((city) => (
-                <li key={city} className="favorites__locations-items">
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <Link className="locations__item-link" to="#">
-                        <span>{city}</span>
-                      </Link>
-                    </div>
-                  </div>
-
-                  <div className="favorites__places">
-                    {offersData
-                      .filter((offer) => offer.city.name === city)
-                      .map((offer) => (
-                        <OfferCard key={offer.id} offerData={offer} variant='favorites' />
-                      ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </main >
+      {favoriteOffersStatus === 'error' || favoriteOffers.length === 0 ?
+        <FavoritesEmptySection />
+        :
+        <FavoritesMainSection />}
       <footer className="footer container">
         <Link className="footer__logo-link" to={ROUTES.mainPage}>
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />

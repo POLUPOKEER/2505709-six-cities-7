@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../../hooks';
+import { useAppSelector } from '../../../store/hooks';
 import Spinner from '../../spinner/spinner';
 import OffersNear from './offer-near-section';
 import Map from '../../map';

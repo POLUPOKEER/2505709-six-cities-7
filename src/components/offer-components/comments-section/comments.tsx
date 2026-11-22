@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../../hooks';
+import { useAppSelector } from '../../../store/hooks';
 import { getComments, getCommentsStatus } from '../../../store/comments/comments-selectors';
 import Spinner from '../../spinner/spinner';
 

@@ -1,25 +1,39 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CitiesList from '../../components/cities-list';
 
 import { CITIES, SortType } from '../../const';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { changeCity } from '../../store/offers/offers-slice';
 
 import Header from '../../components/header';
 import MainSection from '../../components/main-page-components/main-section';
 import { getCity, getOffers, getOffersStatus } from '../../store/offers/offers-selectors';
 import MainEmptySection from '../../components/main-page-components/main-empty-section';
+import { fetchFavoriteOffers, fetchOffers } from '../../store/api-actions';
+import { getFavoriteOffersStatus } from '../../store/favorite-offers/favorite-offers-selectors';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
+  const offers = useAppSelector(getOffers);
+  const offersStatus = useAppSelector(getOffersStatus);
+  const favoriteOffersStatus = useAppSelector(getFavoriteOffersStatus);
 
+  useEffect(() => {
+    if (offersStatus === 'idle') {
+      dispatch(fetchOffers());
+    }
+  }, [dispatch, offersStatus]);
+
+  useEffect(() => {
+    if (favoriteOffersStatus === 'idle') {
+      dispatch(fetchFavoriteOffers());
+    }
+  }, [dispatch, favoriteOffersStatus]);
 
   const currentCity = useAppSelector(getCity);
 
-  const offers = useAppSelector(getOffers);
-  const offersStatus = useAppSelector(getOffersStatus);
 
   const offersData = offers.filter(
     (offer) => offer.city.name === currentCity

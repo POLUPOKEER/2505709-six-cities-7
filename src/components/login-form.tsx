@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { store } from '../store';
 import { loginAction } from '../store/api-actions';
-import { useAppSelector } from '../hooks';
+import { useAppSelector } from '../store/hooks';
 import { AuthorizationStatus } from '../const';
 import { ROUTES } from '../routes';
 import { useNavigate } from 'react-router-dom';

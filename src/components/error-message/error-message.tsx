@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../store/hooks';
 import { getError } from '../../store/app-error/app-error-selectors';
 import './error-message.css';
 

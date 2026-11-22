@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { useAppSelector } from '../hooks';
+import { useAppSelector } from '../store/hooks';
 import { AuthorizationStatus } from '../const';
 import { getAuthorizationStatus } from '../store/user-process/user-process-selectors';
 

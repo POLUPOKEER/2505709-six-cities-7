@@ -1,16 +1,23 @@
 import { Link } from 'react-router-dom';
 import { TOffer } from '../types/offers';
+import { getAuthorizationStatus } from '../store/user-process/user-process-selectors';
+import { AuthorizationStatus } from '../const';
+import { useFavorite } from '../hooks/use-favorite';
+import { useAppSelector } from '../store/hooks';
 type OfferDataProps = {
   offerData: TOffer;
   onHover?: (id: string) => void;
-  variant?: 'default' | 'favorites';
   onLeave?: () => void;
+  variant?: 'default' | 'favorites';
 }
 
 function OfferCard({ offerData, onHover, onLeave, variant = 'default' }: OfferDataProps) {
 
-  const isFavorites = variant === 'favorites';
-  const cardSettings = isFavorites
+  const userAuthorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  const { isFavorite, handleFavoriteClick } = useFavorite(offerData.id);
+
+  const cardSettings = variant === 'favorites'
     ? {
       cardClass: 'favorites__card place-card',
       imageWrapperClass: 'favorites__image-wrapper place-card__image-wrapper',
@@ -43,7 +50,11 @@ function OfferCard({ offerData, onHover, onLeave, variant = 'default' }: OfferDa
             <b className="place-card__price-value">&euro;{offerData.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button disabled={userAuthorizationStatus !== AuthorizationStatus.Auth}
+            onClick={handleFavoriteClick} className={`place-card__bookmark-button button
+              ${isFavorite ? 'place-card__bookmark-button--active' : ''}`}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

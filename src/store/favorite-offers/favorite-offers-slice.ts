@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus } from '../../const';
 import { TOffers } from '../../types/offers';
-import { changeOfferFavoriteStatus, fetchFavoriteOffers } from '../api-actions';
+import { changeOfferFavoriteStatus, fetchFavoriteOffers, logoutAction } from '../api-actions';
 
 export type TFavoriteOffersSlice = {
   favoriteOffers: TOffers;
@@ -33,13 +33,15 @@ export const FavoriteOffersSlice = createSlice({
       .addCase(changeOfferFavoriteStatus.pending, (state) => {
         state.favoriteOffersStatus = 'loading';
       })
-      .addCase(changeOfferFavoriteStatus.fulfilled, (state, action) => {
+      .addCase(changeOfferFavoriteStatus.fulfilled, (state) => {
         state.favoriteOffersStatus = 'success';
-        state.favoriteOffers = action.payload;
       })
       .addCase(changeOfferFavoriteStatus.rejected, (state) => {
-        state.favoriteOffers = [];
         state.favoriteOffersStatus = 'error';
+      })
+      .addCase(logoutAction.fulfilled, (state) => {
+        state.favoriteOffersStatus = 'idle';
+        state.favoriteOffers = [];
       });
   }
 });

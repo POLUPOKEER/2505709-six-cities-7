@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { AppDispatch, TState } from '.';
 import { AxiosInstance } from 'axios';
-import { TOffers } from '../types/offers';
+import { TOffer, TOffers } from '../types/offers';
 import { APIRoute, TIMEOUT_SHOW_ERROR } from '../const';
 import { setError } from './app-error/app-error-slice';
 import { AuthData } from '../types/auth-data';
@@ -12,7 +12,7 @@ import { TComment, TCommentFormData } from '../types/comments';
 import { TFavoriteData } from '../types/favorite-data';
 
 
-export const fetchOffersAction = createAsyncThunk<TOffers, undefined, {
+export const fetchOffers = createAsyncThunk<TOffers, undefined, {
   dispatch: AppDispatch;
   state: TState;
   extra: AxiosInstance;
@@ -37,7 +37,8 @@ export const fetchFavoriteOffers = createAsyncThunk<TOffers, undefined, {
 );
 
 export const changeOfferFavoriteStatus = createAsyncThunk<
-  TOffers, TFavoriteData,
+  TOffer,
+  TFavoriteData,
   {
     dispatch: AppDispatch;
     state: TState;
@@ -45,10 +46,13 @@ export const changeOfferFavoriteStatus = createAsyncThunk<
   }
 >(
   'data/changeOffersFavoriteStatus',
-  async ({ id, status }, { extra: api }) => {
-    const { data } = await api.post<TOffers>(
+  async ({ id, status }, { extra: api, dispatch }) => {
+    const { data } = await api.post<TOffer>(
       `${APIRoute.Favorite}/${id}/${status}`
     );
+
+    await dispatch(fetchFavoriteOffers());
+
     return data;
   }
 );

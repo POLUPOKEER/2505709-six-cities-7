@@ -4,20 +4,16 @@ import MainPage from '../pages/main-page/main-page';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Offer from '../pages/offer/offer';
 import NotFound from '../pages/not-found/not-found';
-import { TOffers } from '../types/offers';
 import PrivateRoute from '../components/privateRoute';
 import { ROUTES } from '../routes';
-import { useAppSelector } from '../hooks';
+import { useAppSelector } from '../store/hooks';
 import LoadingScreen from '../components/spinner/spinner';
 import { AuthorizationStatus } from '../const';
 import { getOffersStatus } from '../store/offers/offers-selectors';
 import { getAuthorizationStatus } from '../store/user-process/user-process-selectors';
 
-type AppProps = {
-  offersFavoritesData: TOffers;
-}
 
-function App({ offersFavoritesData }: AppProps) {
+function App() {
 
   const OffersStatus = useAppSelector(getOffersStatus);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -34,7 +30,7 @@ function App({ offersFavoritesData }: AppProps) {
         <Route path={ROUTES.login} element={<Login />} />
         <Route path={ROUTES.favorites} element={
           <PrivateRoute>
-            <Favorites offersData={offersFavoritesData} />
+            <Favorites />
           </PrivateRoute>
         }
         />

@@ -1,6 +1,6 @@
 import { FormEvent, ChangeEvent, useState, Fragment } from 'react';
 import { TCommentFormData } from '../../../types/comments';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { sendComment } from '../../../store/api-actions';
 import { getOfferDetailsId } from '../../../store/offer-details/offer-details.selectors';
 
