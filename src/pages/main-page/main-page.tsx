@@ -9,7 +9,8 @@ import { changeCity } from '../../store/offers/offers-slice';
 
 import Header from '../../components/header';
 import MainSection from '../../components/main-page-components/main-section';
-import { getCity, getOffers } from '../../store/offers/offers-selectors';
+import { getCity, getOffers, getOffersStatus } from '../../store/offers/offers-selectors';
+import MainEmptySection from '../../components/main-page-components/main-empty-section';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ function MainPage(): JSX.Element {
   const currentCity = useAppSelector(getCity);
 
   const offers = useAppSelector(getOffers);
+  const offersStatus = useAppSelector(getOffersStatus);
 
   const offersData = offers.filter(
     (offer) => offer.city.name === currentCity
@@ -67,13 +69,16 @@ function MainPage(): JSX.Element {
           </section>
         </div>
 
-        <MainSection
-          offersData={offersData}
-          currentCity={currentCity}
-          sortType={sortType}
-          setSortType={setSortType}
-          sortedOffers={sortedOffers}
-        />
+        {offersStatus !== 'error' ?
+          <MainSection
+            offersData={offersData}
+            currentCity={currentCity}
+            sortType={sortType}
+            setSortType={setSortType}
+            sortedOffers={sortedOffers}
+          />
+          :
+          <MainEmptySection currentCity={currentCity} />}
       </main>
     </div>
   );
