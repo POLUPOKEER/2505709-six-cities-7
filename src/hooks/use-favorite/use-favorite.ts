@@ -1,10 +1,10 @@
-import { getFavoriteOffers } from '../store/favorite-offers/favorite-offers-selectors';
-import { changeOfferFavoriteStatus } from '../store/api-actions';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { AuthorizationStatus } from '../const';
-import { ROUTES } from '../routes';
+import { getFavoriteOffers } from '../../store/favorite-offers/favorite-offers-selectors';
+import { changeOfferFavoriteStatus } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../../store/store-hooks';
+import { AuthorizationStatus } from '../../const';
+import { ROUTES } from '../../routes';
 import { useNavigate } from 'react-router-dom';
-import { getAuthorizationStatus } from '../store/user-process/user-process-selectors';
+import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
 
 export const useFavorite = (offerId: string) => {
   const dispatch = useAppDispatch();

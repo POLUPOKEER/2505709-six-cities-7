@@ -1,11 +1,6 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { store } from '../store';
 import { loginAction } from '../store/api-actions';
-import { useAppSelector } from '../store/hooks';
-import { AuthorizationStatus } from '../const';
-import { ROUTES } from '../routes';
-import { useNavigate } from 'react-router-dom';
-import { getAuthorizationStatus } from '../store/user-process/user-process-selectors';
 type LoginFormData = {
   email: string;
   password: string;
@@ -13,14 +8,6 @@ type LoginFormData = {
 
 function LoginForm() {
 
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.Auth) {
-      navigate(ROUTES.mainPage);
-    }
-  }, [authorizationStatus, navigate]);
 
   const [formData, setFormData] = useState<LoginFormData>({
     email: '',
@@ -54,7 +41,6 @@ function LoginForm() {
       return;
     }
 
-    // Заглушка вместо реальной авторизации
     store.dispatch(loginAction({ email: formData.email, password: formData.password }));
   };
 

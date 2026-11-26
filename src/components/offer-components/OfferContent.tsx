@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useFavorite } from '../../hooks/use-favorite';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useFavorite } from '../../hooks/use-favorite/use-favorite';
+import { useAppDispatch, useAppSelector } from '../../store/store-hooks';
 import { getnearbyOffersStatus } from '../../store/near-by-offers/near-by-offers-selectors';
 import { getOfferDetails, getOfferDetailsId, getOfferDetailsStatus } from '../../store/offer-details/offer-details.selectors';
 import { fetchComments, fetchNearbyOffers, fetchOfferDetails } from '../../store/api-actions';

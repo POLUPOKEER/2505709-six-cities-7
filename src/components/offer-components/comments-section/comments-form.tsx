@@ -1,6 +1,6 @@
 import { FormEvent, ChangeEvent, useState, Fragment } from 'react';
 import { TCommentFormData } from '../../../types/comments';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/store-hooks';
 import { sendComment } from '../../../store/api-actions';
 import { getOfferDetailsId } from '../../../store/offer-details/offer-details.selectors';
 
@@ -8,11 +8,11 @@ import { getOfferDetailsId } from '../../../store/offer-details/offer-details.se
 function CommentsForm() {
 
   const offerId = useAppSelector(getOfferDetailsId);
-
-  const [formData, setFormData] = useState<TCommentFormData>({
+  const initialFormData = {
     comment: '',
     rating: 0,
-  });
+  };
+  const [formData, setFormData] = useState<TCommentFormData>(initialFormData);
 
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -40,6 +40,7 @@ function CommentsForm() {
         rating: formData.rating,
       })
     ).unwrap();
+    setFormData(initialFormData);
   };
   const ratingOptions = [
     { value: 5, title: 'perfect' },

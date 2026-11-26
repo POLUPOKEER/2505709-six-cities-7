@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/store-hooks';
 import { getFavoriteOffers } from '../../store/favorite-offers/favorite-offers-selectors';
 import OfferCard from '../offer-card';
 

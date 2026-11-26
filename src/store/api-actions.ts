@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { AppDispatch, TState } from '.';
-import { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { TOffer, TOffers } from '../types/offers';
 import { APIRoute, TIMEOUT_SHOW_ERROR } from '../const';
 import { setError } from './app-error/app-error-slice';
@@ -132,16 +132,28 @@ export const sendComment = createAsyncThunk<
   }
 );
 
-export const checkAuthAction = createAsyncThunk<string, undefined, {
-  dispatch: AppDispatch;
-  state: TState;
-  extra: AxiosInstance;
-}
+export const checkAuthAction = createAsyncThunk<
+  string,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: TState;
+    extra: AxiosInstance;
+    rejectValue: number;
+  }
 >(
   'user/checkAuth',
-  async (_arg, { extra: api }) => {
-    const { data: { email } } = await api.get<UserData>(APIRoute.Login);
-    return email;
+  async (_arg, { extra: api, rejectWithValue }) => {
+    try {
+      const { data: { email } } = await api.get<UserData>(APIRoute.Login);
+      return email;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        return rejectWithValue(401);
+      }
+
+      throw error;
+    }
   }
 );
 

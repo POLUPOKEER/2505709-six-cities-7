@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { TOffer } from '../types/offers';
-import { useFavorite } from '../hooks/use-favorite';
+import { useFavorite } from '../hooks/use-favorite/use-favorite';
 
 type OfferDataProps = {
   offerData: TOffer;

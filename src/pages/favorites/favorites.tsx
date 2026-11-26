@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import Header from '../../components/header';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/store-hooks';
 import { getFavoriteOffers, getFavoriteOffersStatus } from '../../store/favorite-offers/favorite-offers-selectors';
 import Spinner from '../../components/spinner/spinner';
 import FavoritesEmptySection from '../../components/favorites-page-components/favorites-empty-section';
