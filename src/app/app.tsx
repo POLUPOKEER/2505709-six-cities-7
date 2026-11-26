@@ -10,7 +10,7 @@ import { useAppSelector } from '../store/store-hooks';
 import LoadingScreen from '../components/spinner/spinner';
 import { AuthorizationStatus } from '../const';
 import { getOffersStatus } from '../store/offers/offers-selectors';
-import { getAuthorizationStatus } from '../store/user-process/user-process-selectors';
+import { getAuthorizationStatus, getCheckAuthStatus } from '../store/user-process/user-process-selectors';
 import PublicRoute from '../components/routes/publicRoute';
 import useFetchOffers from '../hooks/use-fetch-offers/useFetchOffers';
 import useCheckAuth from '../hooks/use-check-auth/useCheckAuth';
@@ -23,7 +23,8 @@ function App() {
 
   const OffersStatus = useAppSelector(getOffersStatus);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  if (authorizationStatus === AuthorizationStatus.Unknown || OffersStatus === 'loading') {
+  const checkAuthStatus = useAppSelector(getCheckAuthStatus);
+  if ((authorizationStatus === AuthorizationStatus.Unknown || OffersStatus === 'loading') && checkAuthStatus !== 'error') {
     return (
       <LoadingScreen />
     );
