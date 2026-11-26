@@ -13,11 +13,13 @@ import { getOffersStatus } from '../store/offers/offers-selectors';
 import { getAuthorizationStatus } from '../store/user-process/user-process-selectors';
 import PublicRoute from '../components/routes/publicRoute';
 import useFetchOffers from '../hooks/use-fetch-offers/useFetchOffers';
+import useCheckAuth from '../hooks/use-check-auth/useCheckAuth';
 
 
 function App() {
 
   useFetchOffers();
+  useCheckAuth();
 
   const OffersStatus = useAppSelector(getOffersStatus);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
