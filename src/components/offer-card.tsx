@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { TOffer } from '../types/offers';
 import { useFavorite } from '../hooks/use-favorite/use-favorite';
+import React from 'react';
 
 type OfferDataProps = {
   offerData: TOffer;
@@ -73,4 +74,4 @@ function OfferCard({ offerData, onHover, onLeave, variant = 'default' }: OfferDa
   );
 }
 
-export default OfferCard;
+export default React.memo(OfferCard);
